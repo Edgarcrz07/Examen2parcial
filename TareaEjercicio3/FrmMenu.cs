@@ -21,6 +21,7 @@ namespace TareaEjercicio3
             {
               frmProducto = new FrmProducto();
                 frmProducto.MdiParent = this;
+                frmProducto.FormClosed += FrmProducto_FormClosed;
               frmProducto.Show();
             }
             else
@@ -28,6 +29,16 @@ namespace TareaEjercicio3
                 frmProducto.Activate();
 
             }
+        }
+
+        private void FrmProducto_FormClosed(object sender, FormClosedEventArgs e)
+        {
+           frmProducto=null;
+        }
+
+        private void FrmMenu_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

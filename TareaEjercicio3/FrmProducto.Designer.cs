@@ -111,6 +111,7 @@
             // 
             this.CodigoTextBox.Enabled = false;
             this.CodigoTextBox.Location = new System.Drawing.Point(232, 50);
+            this.CodigoTextBox.MaxLength = 45;
             this.CodigoTextBox.Name = "CodigoTextBox";
             this.CodigoTextBox.Size = new System.Drawing.Size(370, 24);
             this.CodigoTextBox.TabIndex = 6;
@@ -119,6 +120,7 @@
             // 
             this.DescripcionTextBox.Enabled = false;
             this.DescripcionTextBox.Location = new System.Drawing.Point(232, 92);
+            this.DescripcionTextBox.MaxLength = 45;
             this.DescripcionTextBox.Name = "DescripcionTextBox";
             this.DescripcionTextBox.Size = new System.Drawing.Size(370, 24);
             this.DescripcionTextBox.TabIndex = 7;
@@ -127,9 +129,11 @@
             // 
             this.PrecioTextBox.Enabled = false;
             this.PrecioTextBox.Location = new System.Drawing.Point(232, 133);
+            this.PrecioTextBox.MaxLength = 18;
             this.PrecioTextBox.Name = "PrecioTextBox";
             this.PrecioTextBox.Size = new System.Drawing.Size(370, 24);
             this.PrecioTextBox.TabIndex = 8;
+            this.PrecioTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PrecioTextBox_KeyPress);
             // 
             // ExistenciaTextBox
             // 
@@ -138,6 +142,7 @@
             this.ExistenciaTextBox.Name = "ExistenciaTextBox";
             this.ExistenciaTextBox.Size = new System.Drawing.Size(370, 24);
             this.ExistenciaTextBox.TabIndex = 9;
+            this.ExistenciaTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ExistenciaTextBox_KeyPress);
             // 
             // Nuevobutton
             // 
@@ -157,6 +162,7 @@
             this.Modificarbutton.TabIndex = 11;
             this.Modificarbutton.Text = "Modificar";
             this.Modificarbutton.UseVisualStyleBackColor = true;
+            this.Modificarbutton.Click += new System.EventHandler(this.Modificarbutton_Click);
             // 
             // Guardarbutton
             // 
@@ -177,6 +183,7 @@
             this.Eliminarbutton.TabIndex = 13;
             this.Eliminarbutton.Text = "Eliminar";
             this.Eliminarbutton.UseVisualStyleBackColor = true;
+            this.Eliminarbutton.Click += new System.EventHandler(this.Eliminarbutton_Click);
             // 
             // Cancelarbutton
             // 
@@ -225,6 +232,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmProducto";
             this.Text = "FrmProducto";
+            this.Load += new System.EventHandler(this.FrmProducto_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ImagenPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ProductodataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();

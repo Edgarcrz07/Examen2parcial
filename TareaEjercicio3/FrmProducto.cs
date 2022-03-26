@@ -68,7 +68,7 @@ namespace TareaEjercicio3
             DescripcionTextBox.Clear();
             PrecioTextBox.Clear();
             ExistenciaTextBox.Clear();
-            BuscarImagenbutton.Image = null;
+            ImagenPictureBox.Image = null;
 
 
         }
@@ -113,23 +113,42 @@ namespace TareaEjercicio3
                 producto.Descripcion = DescripcionTextBox.Text;
                 producto.Precio = Convert.ToDecimal(PrecioTextBox.Text);
                 producto.Existencia = Convert.ToInt32(ExistenciaTextBox.Text);
+                if (ImagenPictureBox.Image!=null)
+                {
+                    System.IO.MemoryStream ms = new System.IO.MemoryStream();
+                    ImagenPictureBox.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
 
-                System.IO.MemoryStream ms = new System.IO.MemoryStream();
-                ImagenPictureBox.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    producto.Imagen = ms.GetBuffer();
 
-                producto.Imagen = ms.GetBuffer();
+                }
+                
 
                 if (operacion == "Nuevo")
                 {
 
-                    bool inserto = productoDA.InsertarProducto(producto);
-                    
+                    bool insertar = productoDA.InsertarProducto(producto);
+
+                    if (insertar)
+                    {
                         DesabilitarHablitarControles();
                         limpiarControles();
+                        ListarProductos();
                         MessageBox.Show("Producto Ingresado");
-                    
+                    }
 
 
+
+                }
+                else if (operacion =="Modificar")
+                {
+                    bool modifico = productoDA.ModificarProducto(producto);
+                    if (modifico)
+                    {
+                        limpiarControles();
+                        DesabilitarHablitarControles();
+                        ListarProductos();
+                        MessageBox.Show("Producto Modificado");
+                    }
                 }
 
             }
@@ -154,6 +173,104 @@ namespace TareaEjercicio3
             if(result == DialogResult.OK)
             {
                 ImagenPictureBox.Image=Image.FromFile(dialog.FileName);
+            }
+
+        }
+
+        private void FrmProducto_Load(object sender, EventArgs e)
+        {
+            ListarProductos();
+
+        }
+        private void ListarProductos()
+        {
+            ProductodataGridView.DataSource = productoDA.ListarProductos();
+
+        }
+
+        private void PrecioTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar)&& char.IsControl(e.KeyChar) && (e.KeyChar !='.')   )
+            {
+                e.Handled = true;
+
+            }
+            if ((e.KeyChar=='.') && (sender as TextBox).Text.IndexOf('.') > -1)
+            {
+                e.Handled = true;
+
+            }
+
+
+        }
+
+        private void ExistenciaTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && char.IsControl(e.KeyChar))
+            {
+                e.Handled = true;
+
+            }
+            
+
+
+        }
+
+        private void Modificarbutton_Click(object sender, EventArgs e)
+        {
+            operacion = "Modificar";
+            if (ProductodataGridView.SelectedRows.Count >0)
+            {
+                CodigoTextBox.Text = ProductodataGridView.CurrentRow.Cells["Codigo"].Value.ToString();
+                DescripcionTextBox.Text = ProductodataGridView.CurrentRow.Cells["Descripcion"].Value.ToString();
+               PrecioTextBox.Text = ProductodataGridView.CurrentRow.Cells["Precio"].Value.ToString();
+                ExistenciaTextBox.Text = ProductodataGridView.CurrentRow.Cells["Existencia"].Value.ToString();
+
+                var temporal = productoDA.SeleccionarImagen(ProductodataGridView.CurrentRow.Cells["Codigo"].Value.ToString());
+                if (temporal.Length >0)
+                {
+                    System.IO.MemoryStream ms=new System.IO.MemoryStream(temporal);
+                    ImagenPictureBox.Image = System.Drawing.Image.FromStream(ms);
+
+
+                }
+                else
+                {
+                    ImagenPictureBox.Image = null;
+                }
+                HablitarControles();
+                CodigoTextBox.Focus();
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar un producto");
+            }
+
+        }
+
+        private void Eliminarbutton_Click(object sender, EventArgs e)
+        {
+            if (ProductodataGridView.SelectedRows.Count > 0)
+
+            {
+                bool elimino = productoDA.EliminarProducto(ProductodataGridView.CurrentRow.Cells["Codigo"].Value.ToString());
+                if (elimino)
+                {
+                    ListarProductos();
+                    MessageBox.Show("El producto ha sido eliminado", "Atencion",  MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo eliminar el producto", "Atencion",  MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+
+            }
+            else
+            {
+                MessageBox.Show("Debe seleccionar un producto", "Atencion",  MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
 
         }

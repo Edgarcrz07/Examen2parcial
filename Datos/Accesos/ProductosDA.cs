@@ -117,6 +117,39 @@ namespace Datos.Accesos
             return elimino;
         }
 
+        public byte [] SeleccionarImagen(string codigo)
+        {
+            byte[] _imagen = new byte[0];
+            try
+            {
+                string sql = "Select Imagen from producto WHERE Codigo=@Codigo;";
+                conn = new MySqlConnection(cadena);
+                conn.Open();
+                cmd = new MySqlCommand(sql, conn);
+
+                cmd.Parameters.AddWithValue("@Codigo",codigo);
+             ;
+                cmd.ExecuteNonQuery();
+               MySqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    _imagen = (byte[])reader["Imagen"];
+
+                }
+                conn.Close();
+
+
+
+
+            }
+            catch (Exception)
+            {
+
+               
+            }
+            return _imagen;
+        }
+
 
 
 }

@@ -124,6 +124,7 @@
             this.IsMdiContainer = true;
             this.Name = "FrmMenu";
             this.Text = "FrmMenu";
+            this.Load += new System.EventHandler(this.FrmMenu_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControlAdv1)).EndInit();
             this.ribbonControlAdv1.ResumeLayout(false);
             this.ribbonControlAdv1.PerformLayout();
