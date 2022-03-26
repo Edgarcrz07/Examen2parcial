@@ -86,6 +86,8 @@
   <ItemGroup>
     <Compile Include="Accesos\ProductosDA.cs" />
     <Compile Include="Accesos\UsuarioDA.cs" />
+    <Compile Include="Entidades\DetallePedidos.cs" />
+    <Compile Include="Entidades\Pedidos.cs" />
     <Compile Include="Entidades\Producto.cs" />
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

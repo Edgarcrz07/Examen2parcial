@@ -15,6 +15,8 @@ namespace TareaEjercicio3
             InitializeComponent();
         }
         FrmProducto frmProducto = null;
+        FrmFactura frmFactura=null;
+
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             if (frmProducto==null)
@@ -39,6 +41,31 @@ namespace TareaEjercicio3
         private void FrmMenu_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void NuevaFacturatoolStripButton_Click(object sender, EventArgs e)
+        {
+            {
+                if (frmFactura == null)
+                {
+                    frmFactura = new FrmFactura();
+                    frmFactura.MdiParent = this;
+                    frmFactura.FormClosed += FrmFactura_FormClosed;
+                    frmFactura.Show();
+                }
+                else
+                {
+                    frmFactura.Activate();
+
+                }
+            }
+
+
+        }
+
+        private void FrmFactura_FormClosed(object sender, FormClosedEventArgs e)
+        {
+           frmFactura=null;
         }
     }
 }
